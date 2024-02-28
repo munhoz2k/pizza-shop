@@ -112,17 +112,13 @@ export function SingUp() {
                 <a href="">políticas de privacidade</a>
               </p>
 
-              <Button
-                disabled={isSubmitting}
-                type="submit"
-                className="w-full hover:bg-green-500"
-              >
+              <Button disabled={isSubmitting} type="submit" className="w-full">
                 Concluir cadastro
               </Button>
 
               <Button
                 variant="outline"
-                className="w-full border-2 text-muted-foreground hover:bg-zinc-200"
+                className="w-full"
                 asChild
                 type="button"
               >
