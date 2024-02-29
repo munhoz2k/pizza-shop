@@ -38,7 +38,6 @@ export function RevenueChart() {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const CustomToolTip = ({ active, payload, label }: any) => {
-    console.log(active, payload, label)
     if (active && payload && payload.length) {
       return (
         <div className="space-y-2 rounded-md bg-muted/90 p-2">

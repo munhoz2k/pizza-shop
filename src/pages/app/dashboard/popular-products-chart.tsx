@@ -68,6 +68,7 @@ export function PopularProductsChart() {
         <ResponsiveContainer width="100%" height={240}>
           <PieChart style={{ fontSize: 12 }}>
             <Pie
+              className="focus:outline-none"
               data={dataList}
               dataKey="amount"
               nameKey="product"
@@ -84,7 +85,8 @@ export function PopularProductsChart() {
                   <Cell
                     key={`cell-${index}`}
                     fill={COLORS[index]}
-                    className="stroke-background hover:opacity-60"
+                    className="stroke-background hover:opacity-60 focus:outline-none"
+                    focusable={false}
                   />
                 )
               })}
