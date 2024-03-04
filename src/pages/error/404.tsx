@@ -7,7 +7,7 @@ export function NotFoundPage() {
         Página não encontrada
       </h1>
 
-      <p className="text-accent">
+      <p className="text-muted-foreground">
         Voltar para o{' '}
         <Link to="/" className="text-sky-500 dark:text-sky-400">
           Dashboard
