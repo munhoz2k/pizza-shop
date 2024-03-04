@@ -65,8 +65,8 @@ export function SignIn() {
               <Input
                 type="email"
                 placeholder="Seu e-mail"
-                className="border-foreground placeholder-muted-foreground
-                placeholder:text-base focus-visible:ring-1 focus-visible:ring-offset-0"
+                className="placeholder-muted-foreground focus-visible:ring-2
+                focus-visible:ring-offset-0"
                 {...register('email')}
               />
             </div>

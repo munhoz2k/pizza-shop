@@ -67,7 +67,7 @@ export function SingUp() {
           </div>
 
           <form className="space-y-4" onSubmit={handleSubmit(handleSingUp)}>
-            <div className="space-y-2 [&>div]:space-y-0 [&_input]:border-2 [&_label]:font-semibold">
+            <div className="space-y-2 [&>div]:space-y-1 [&_label]:font-semibold">
               <div>
                 <Label htmlFor="restaurantName">Nome do estabelecimento</Label>
                 <Input
