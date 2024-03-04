@@ -1,17 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useQuery } from '@tanstack/react-query'
 import { BarChart } from 'lucide-react'
 import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts'
 import colors from 'tailwindcss/colors'
 
+import {
+  getPopularProducts,
+  getPopularProductsRes,
+} from '@/api/get-popular-products'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-
-const dataList = [
-  { product: 'Mussarela', amount: 42 },
-  { product: 'Pepperoni', amount: 30 },
-  { product: 'Marguerita', amount: 50 },
-  { product: '4 Queijos', amount: 16 },
-  { product: 'Lombo', amount: 39 },
-]
 
 const COLORS = [
   colors.sky[500],
@@ -19,18 +16,19 @@ const COLORS = [
   colors.violet[500],
   colors.emerald[500],
   colors.rose[500],
-]
+] as const
 
 export function PopularProductsChart() {
-  const customizedLabel = ({
-    cx,
-    cy,
-    midAngle,
-    innerRadius,
-    outerRadius,
-    value,
-    index,
-  }: any) => {
+  const { data: popularProducts } = useQuery({
+    queryKey: ['metrics', 'popular-products'],
+    queryFn: getPopularProducts,
+  })
+
+  // This is a customized label for the chart
+  const customizedLabel = (
+    dataList: getPopularProductsRes,
+    { cx, cy, midAngle, innerRadius, outerRadius, value, index }: any,
+  ) => {
     const RADIAN = Math.PI / 180
     const radius = 12 + innerRadius + (outerRadius - innerRadius)
     const x = cx + radius * Math.cos(-midAngle * RADIAN)
@@ -44,8 +42,8 @@ export function PopularProductsChart() {
         textAnchor={x > cx ? 'start' : 'end'}
         dominantBaseline="central"
       >
-        {dataList[index].product.length > 12
-          ? dataList[index].product.substring(0, 12).concat('...')
+        {dataList[index].product.length > 16
+          ? dataList[index].product.substring(0, 16).concat('...')
           : dataList[index].product}{' '}
         ({value})
       </text>
@@ -65,34 +63,37 @@ export function PopularProductsChart() {
       </CardHeader>
 
       <CardContent>
-        <ResponsiveContainer width="100%" height={240}>
-          <PieChart style={{ fontSize: 12 }}>
-            <Pie
-              className="focus:outline-none"
-              data={dataList}
-              dataKey="amount"
-              nameKey="product"
-              cx="50%"
-              cy="50%"
-              outerRadius={80}
-              innerRadius={50}
-              strokeWidth={2}
-              label={customizedLabel}
-              labelLine={false}
-            >
-              {dataList.map((_, index) => {
-                return (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={COLORS[index]}
-                    className="stroke-background hover:opacity-60 focus:outline-none"
-                    focusable={false}
-                  />
-                )
-              })}
-            </Pie>
-          </PieChart>
-        </ResponsiveContainer>
+        {popularProducts && (
+          <ResponsiveContainer width="100%" height={240}>
+            <PieChart style={{ fontSize: 12 }}>
+              <Pie
+                className="focus:outline-none"
+                data={popularProducts}
+                dataKey="amount"
+                nameKey="product"
+                cx="50%"
+                cy="50%"
+                outerRadius={80}
+                innerRadius={60}
+                strokeWidth={2}
+                label={(props) =>
+                  customizedLabel(popularProducts, { ...props })
+                }
+                labelLine={false}
+              >
+                {popularProducts.map((_, index) => {
+                  return (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index]}
+                      className="stroke-background hover:opacity-60 focus:outline-none"
+                    />
+                  )
+                })}
+              </Pie>
+            </PieChart>
+          </ResponsiveContainer>
+        )}
       </CardContent>
     </Card>
   )
