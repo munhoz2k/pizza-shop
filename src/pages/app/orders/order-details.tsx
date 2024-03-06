@@ -19,6 +19,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
+import { OrderDetailsSkeleton } from './order-details-skeleton'
 import { OrderStatus } from './order-status'
 
 interface OrderDetailsProps {
@@ -40,7 +41,7 @@ export function OrderDetails({ orderId, open }: OrderDetailsProps) {
         <DialogDescription>Detalhes do pedido</DialogDescription>
       </DialogHeader>
 
-      {order && (
+      {order ? (
         <div className="space-y-6">
           <Table>
             <TableBody>
@@ -103,7 +104,9 @@ export function OrderDetails({ orderId, open }: OrderDetailsProps) {
                 return (
                   <TableRow key={item.id}>
                     <TableCell>{item.product.name}</TableCell>
-                    <TableCell className="text-right">2</TableCell>
+                    <TableCell className="text-right">
+                      {item.quantity}
+                    </TableCell>
                     <TableCell className="text-nowrap text-right">
                       {(item.priceInCents / 100).toLocaleString('pt-BR', {
                         style: 'currency',
@@ -137,6 +140,8 @@ export function OrderDetails({ orderId, open }: OrderDetailsProps) {
             </TableFooter>
           </Table>
         </div>
+      ) : (
+        <OrderDetailsSkeleton />
       )}
     </DialogContent>
   )
