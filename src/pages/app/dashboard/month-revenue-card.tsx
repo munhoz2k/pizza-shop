@@ -25,14 +25,20 @@ export function MonthRevenueCard() {
       <CardContent className="space-y-1">
         {monthRevenue ? (
           <>
-            <span className="text-2xl font-bold tracking-tight">
+            <span
+              data-testid="month-revenue-total"
+              className="text-2xl font-bold tracking-tight"
+            >
               {(monthRevenue.receipt / 100).toLocaleString('pt-BR', {
                 style: 'currency',
                 currency: 'BRL',
               })}
             </span>
 
-            <p className="text-xs text-muted-foreground">
+            <p
+              data-testid="month-revenue-percentage"
+              className="text-xs text-muted-foreground"
+            >
               {monthRevenue.diffFromLastMonth >= 0 ? (
                 <span className="text-emerald-500 dark:text-emerald-400">
                   +{monthRevenue.diffFromLastMonth}%

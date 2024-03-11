@@ -24,10 +24,16 @@ export function MonthOrdersAmountCard() {
       <CardContent className="space-y-1">
         {monthOrdersAmount ? (
           <>
-            <span className="text-2xl font-bold tracking-tight">
+            <span
+              data-testid="month-orders-total"
+              className="text-2xl font-bold tracking-tight"
+            >
               {monthOrdersAmount.amount.toLocaleString('pt-BR')}
             </span>
-            <p className="text-xs text-muted-foreground">
+            <p
+              data-testid="month-orders-percentage"
+              className="text-xs text-muted-foreground"
+            >
               {monthOrdersAmount.diffFromLastMonth >= 0 ? (
                 <span className="text-emerald-500 dark:text-emerald-400">
                   +{monthOrdersAmount.diffFromLastMonth}%

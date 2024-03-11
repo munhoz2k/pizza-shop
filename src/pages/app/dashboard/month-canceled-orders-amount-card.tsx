@@ -24,10 +24,16 @@ export function MonthCanceledOrdersAmountCard() {
       <CardContent className="space-y-1">
         {monthCanceledOrders ? (
           <>
-            <span className="text-2xl font-bold tracking-tight">
+            <span
+              data-testid="canceled-orders-total"
+              className="text-2xl font-bold tracking-tight"
+            >
               {monthCanceledOrders.amount.toLocaleString('pt-BR')}
             </span>
-            <p className="text-xs text-muted-foreground">
+            <p
+              data-testid="canceled-orders-percentage"
+              className="text-xs text-muted-foreground"
+            >
               {monthCanceledOrders.diffFromLastMonth > 0 ? (
                 <span className="text-rose-500 dark:text-rose-400">
                   +{monthCanceledOrders.diffFromLastMonth}%
