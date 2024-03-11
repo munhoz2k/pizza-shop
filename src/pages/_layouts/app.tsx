@@ -22,6 +22,8 @@ export function AppLayout() {
             toast.error(
               'É necessário realizar sign-in antes de acessar a página principal!',
             )
+          } else {
+            throw error
           }
         }
       },
