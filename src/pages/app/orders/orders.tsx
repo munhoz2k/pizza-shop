@@ -4,7 +4,6 @@ import { useSearchParams } from 'react-router-dom'
 import { z } from 'zod'
 
 import { getOrders } from '@/api/get-orders'
-import { Pagination } from '@/components/react/pagination'
 import {
   Table,
   TableBody,
@@ -12,6 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { Pagination } from '@/pages/app/orders/pagination'
 
 import { OrderTableFilters } from './order-table-filters'
 import { OrderTableRow } from './order-table-row'
