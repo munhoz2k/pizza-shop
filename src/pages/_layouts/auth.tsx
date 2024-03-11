@@ -1,6 +1,8 @@
 import { Pizza } from 'lucide-react'
 import { Outlet } from 'react-router-dom'
 
+import pizzaSvg from '@/assets/pizza-maker.svg'
+
 export function AuthLayout() {
   return (
     <div className="grid min-h-screen grid-cols-2 antialiased">
@@ -9,6 +11,8 @@ export function AuthLayout() {
           <Pizza className="h-5 w-5" />
           <span className="font-sans font-semibold">pizza.shop</span>
         </div>
+
+        <img src={pizzaSvg} className="mx-auto size-[90%]" alt="Pizzaiolo" />
 
         <footer className="text-sm">
           Painel do parceiro &copy; pizza.shop - {new Date().getFullYear()}
