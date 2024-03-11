@@ -1,52 +1,87 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Label } from '@radix-ui/react-label'
-import { useEffect } from 'react'
+import { useMutation } from '@tanstack/react-query'
 import { Helmet } from 'react-helmet-async'
-import { useForm } from 'react-hook-form'
+import { FieldErrors, useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
+import { registerRestaurant } from '@/api/register-restaurant'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
 const singUpSchema = z.object({
   restaurantName: z.string(),
   managerName: z.string(),
-  phoneNumber: z.string(),
+  phone: z.string(),
   email: z.string().email(),
 })
 
 type SingUpProps = z.infer<typeof singUpSchema>
 
 export function SingUp() {
+  const navigate = useNavigate()
+
   const {
     register,
     handleSubmit,
-    formState: { isSubmitting, errors },
+    formState: { isSubmitting },
   } = useForm<SingUpProps>({
     resolver: zodResolver(singUpSchema),
   })
 
-  const navigate = useNavigate()
+  const { mutateAsync: registerRestaurantFn } = useMutation({
+    mutationFn: registerRestaurant,
+  })
 
-  useEffect(() => {
-    if (errors.email?.message) {
-      toast.error('E-mail inválido')
-    }
-  }, [errors])
-
-  async function handleSingUp({ email }: SingUpProps) {
+  async function handleSingUp({
+    restaurantName,
+    managerName,
+    phone,
+    email,
+  }: SingUpProps) {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 2000))
+      await registerRestaurantFn({
+        restaurantName,
+        managerName,
+        phone,
+        email,
+      })
+
       toast.success('Restaurante cadastrado com sucesso', {
         action: {
           label: 'Login',
-          onClick: () => navigate('/sign-in'),
+          onClick: () => navigate(`/sign-in?email=${email}`),
         },
       })
     } catch (error) {
       toast.error('Erro ao cadastrar restaurante')
+    }
+  }
+
+  function handleSignUpError({
+    restaurantName,
+    managerName,
+    phone,
+    email,
+  }: FieldErrors<SingUpProps>) {
+    if (restaurantName) {
+      toast.error(
+        'O nome do estabelecimento não foi inserido ou foi inserido incorretamente, por favor tente novamente!',
+      )
+    } else if (managerName) {
+      toast.error(
+        'Seu nome não foi inserido ou foi inserido incorretamente, por favor tente novamente!',
+      )
+    } else if (phone) {
+      toast.error(
+        'Seu celular não foi inserido ou foi inserido incorretamente, por favor tente novamente!',
+      )
+    } else if (email) {
+      toast.error(
+        'Seu e-mail não foi inserido ou foi inserido incorretamente, por favor tente novamente!',
+      )
     }
   }
 
@@ -66,7 +101,10 @@ export function SingUp() {
             </p>
           </div>
 
-          <form className="space-y-4" onSubmit={handleSubmit(handleSingUp)}>
+          <form
+            className="space-y-4"
+            onSubmit={handleSubmit(handleSingUp, handleSignUpError)}
+          >
             <div className="space-y-2 [&>div]:space-y-1 [&_label]:font-semibold">
               <div>
                 <Label htmlFor="restaurantName">Nome do estabelecimento</Label>
@@ -87,12 +125,8 @@ export function SingUp() {
               </div>
 
               <div>
-                <Label htmlFor="phoneNumber">Seu celular</Label>
-                <Input
-                  id="phoneNumber"
-                  type="number"
-                  {...register('phoneNumber')}
-                />
+                <Label htmlFor="phone">Seu celular</Label>
+                <Input id="phone" type="number" {...register('phone')} />
               </div>
 
               <div>
