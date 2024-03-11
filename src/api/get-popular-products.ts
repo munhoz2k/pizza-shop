@@ -1,12 +1,12 @@
 import { api } from '@/lib/axios'
 
-export type getPopularProductsRes = {
+export type GetPopularProductsRes = {
   product: string
   amount: number
 }[]
 
 export async function getPopularProducts() {
-  const { data } = await api.get<getPopularProductsRes>(
+  const { data } = await api.get<GetPopularProductsRes>(
     '/metrics/popular-products',
   )
 

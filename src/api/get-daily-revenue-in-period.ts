@@ -6,7 +6,7 @@ export interface GetDailyRevenueInPeriodQuery {
 }
 
 export type GetDailyRevenueInPeriodRes = {
-  date: number
+  date: string
   receipt: number
 }[]
 
