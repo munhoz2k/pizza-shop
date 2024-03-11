@@ -88,7 +88,7 @@ export function AccountMenu() {
             asChild
             disabled={isSigningOut}
           >
-            <button className="w-full" onClick={() => signOutFn}>
+            <button className="w-full" onClick={() => signOutFn()}>
               <LogOut className="mr-2 size-4" />
               <span>Sair</span>
             </button>

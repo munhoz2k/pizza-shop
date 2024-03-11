@@ -42,7 +42,7 @@ export function StoreProfileDialog() {
     mutationFn: updateProfile,
     onMutate: updateProfileCache,
     onError(_, __, context) {
-      if (context?.name) {
+      if (context) {
         updateProfileCache({
           name: context.name,
           description: context.description,
@@ -74,9 +74,9 @@ export function StoreProfileDialog() {
         name,
         description,
       })
-    }
 
-    return cached
+      return cached
+    }
   }
 
   async function handleProfileUpdate(data: RestaurantProfileSchema) {
@@ -86,9 +86,9 @@ export function StoreProfileDialog() {
         description: data.description,
       })
 
-      toast.success('Perfil atualizado com sucesso.')
+      toast.success('Perfil atualizado com sucesso!')
     } catch (error) {
-      toast.error('Falha ao atualizar o perfil, porfav')
+      toast.error('Falha ao atualizar o perfil, tente novamente!')
     }
   }
 
@@ -130,6 +130,7 @@ export function StoreProfileDialog() {
               Cancelar
             </Button>
           </DialogClose>
+
           <Button type="submit" variant="default" disabled={isSubmitting}>
             Salvar
           </Button>
