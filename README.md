@@ -1,23 +1,37 @@
 <h1>Pizza Shop</h1>
 <p>
  <a href="#about">About</a> • 
+ <a href="#technologies">Technologies</a> • 
  <a href="#objective">Objective</a> •
  <a href="#how-to-install">How to install</a> • 
- <a href="#technologies">Technologies</a> • 
 </p>
 
-<!-- ![giphy](https://github.com/munhoz2k/github-blog/assets/71861475/13c47d2c-c118-4c12-922c-03d82447cbb6) -->
- 
 # About
-This is a beautiful page built with Shadcn/ui & Tailwind where restaurants can manage their
+- This is a beautiful page built with Shadcn/ui & Tailwind where restaurants can manage their
 delivery orders. It can be integrated with an API like iFood to receive and manage orders.
 
-The Pizza Shop dashboard contains financial metrics and two charts. The first is a line chart
+- Pizza Shop app includes unit tests and E2E tests
+
+- The Pizza Shop dashboard contains financial metrics and two charts. The first is a line chart
 showing the total value of orders received on the days selected by the user, with the ability
 to select a maximum of 7 days. The second chart is a pie chart that displays the 5 most ordered products.
 
-The page also features an order list where orders can be managed. In this list, you can change
+- The page also features an order list where orders can be managed. In this list, you can change
 the order status, cancel an order, and view order details to see more information about the order and the customer.
+
+# Technologies
+- [@react](https://react.dev/)
+- [@tailwindcss](https://tailwindcss.com/)
+- [@shadcn-ui](https://ui.shadcn.com/)
+- [@react-query](https://tanstack.com/query/latest)
+- [@vitest](https://vitest.dev/)
+- [@mock-service-worker](https://mswjs.io/)
+- [@testing-library](https://testing-library.com/)
+- [@playwright](https://playwright.dev/)
+- [@typescript](https://www.typescriptlang.org/)
+- [@vitejs](https://vitejs.dev/)
+- [@eslint](https://eslint.org/)
+- [@prettier](https://prettier.io/)
 
 # Objective
 This project is a Rocketseat's challenge to the students where they have to develop the app by themselves.
@@ -53,11 +67,3 @@ the purpose of this application is to practice my front-end skills building this
 
 - API response delay is enabled by default, you can change that by setting it to false
 - Also, if you want to change the backend host port, you can do so in the API source code and in the .env file.
-
-# Technologies
-- [@react](https://github.com/facebook/react)
-- [@styled-components](https://github.com/styled-components/styled-components)
-- [@typescript](https://github.com/microsoft/TypeScript)
-- [@nodejs](https://github.com/nodejs/node)
-- [@vitejs](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md)
-- [@eslint](https://github.com/eslint/eslint)
