@@ -6,7 +6,7 @@ import colors from 'tailwindcss/colors'
 
 import {
   getPopularProducts,
-  getPopularProductsRes,
+  GetPopularProductsRes,
 } from '@/api/get-popular-products'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
@@ -26,7 +26,7 @@ export function PopularProductsChart() {
 
   // This is a customized label for the chart
   const customizedLabel = (
-    dataList: getPopularProductsRes,
+    dataList: GetPopularProductsRes,
     { cx, cy, midAngle, innerRadius, outerRadius, value, index }: any,
   ) => {
     const RADIAN = Math.PI / 180
