@@ -1,7 +1,6 @@
 import { setupWorker } from 'msw/browser'
 
-import { env } from '@/env'
-
+// import { env } from '@/env'
 import { approveOrderMock } from './approve-order-mock'
 import { cancelOrderMock } from './cancel-order-mock'
 import { deliverOrderMock } from './deliver-order-mock'
@@ -41,9 +40,9 @@ export const worker = setupWorker(
 )
 
 export async function enableMSW() {
-  if (env.MODE !== 'test') {
-    return
-  }
+  // if (env.MODE !== 'test') {
+  //   return
+  // }
 
   await worker.start()
 }
