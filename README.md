@@ -6,7 +6,7 @@
  <a href="#how-to-install">How to install</a> • 
 </p>
 
-# `App Url:` [https://pizza-shop-self.vercel.app](https://pizza-shop-self.vercel.app)
+### `App Url:` [https://pizza-shop-self.vercel.app](https://pizza-shop-self.vercel.app)
 
 # About
 - This is a beautiful page built with Shadcn/ui & Tailwind where restaurants can manage their
