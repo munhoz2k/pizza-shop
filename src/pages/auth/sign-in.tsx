@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
@@ -18,6 +18,7 @@ type signInProps = z.infer<typeof signInSchema>
 
 export function SignIn() {
   const [searchParams] = useSearchParams()
+  const navigate = useNavigate()
 
   const {
     register,
@@ -38,12 +39,15 @@ export function SignIn() {
     try {
       await authenticate({ email })
 
-      toast.success('Enviamos um link de autenticação para o seu e-mail!', {
-        action: {
-          label: 'Reenviar',
-          onClick: () => handleSignIn({ email }),
+      toast.success(
+        'Login realizado com sucesso, clique no botão para acessar a página inicial!',
+        {
+          action: {
+            label: 'Início',
+            onClick: () => navigate('/', { replace: true }),
+          },
         },
-      })
+      )
     } catch (err) {
       toast.error('Credenciais inválidas')
     }
