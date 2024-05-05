@@ -23,47 +23,52 @@ const orders: Orders = Array.from({ length: 60 }).map((_, i) => {
   }
 })
 
-export const getOrdersMock = http.get<never, never, GetOrdersRes>(
-  '/orders',
-  async ({ request }) => {
-    const { searchParams } = new URL(request.url)
+export const getOrdersMock = http.get('/orders', ({ cookies, request }) => {
+  if (!cookies.auth) {
+    return new HttpResponse(null, { status: 401 })
+  }
 
-    const pageIndex = searchParams.get('pageIndex')
-      ? Number(searchParams.get('pageIndex'))
-      : 0
+  const { searchParams } = new URL(request.url)
 
-    const customerName = searchParams.get('customerName')
-    const orderId = searchParams.get('orderId')
-    const status = searchParams.get('status')
+  const pageIndex = searchParams.get('pageIndex')
+    ? Number(searchParams.get('pageIndex'))
+    : 0
 
-    let filteredOrders = orders
+  const customerName = searchParams.get('customerName')
+  const orderId = searchParams.get('orderId')
+  const status = searchParams.get('status')
 
-    if (customerName) {
-      filteredOrders = orders.filter((order) =>
-        order.customerName.includes(customerName),
-      )
-    }
+  let filteredOrders = orders
 
-    if (orderId) {
-      filteredOrders = orders.filter((order) => order.orderId.includes(orderId))
-    }
-
-    if (status) {
-      filteredOrders = orders.filter((order) => order.status === status)
-    }
-
-    const paginatedOrders = filteredOrders.slice(
-      pageIndex * 10,
-      (pageIndex + 1) * 10,
+  if (customerName) {
+    filteredOrders = filteredOrders.filter((order) =>
+      order.customerName.includes(customerName),
     )
+  }
 
-    return HttpResponse.json({
-      orders: paginatedOrders,
-      meta: {
-        pageIndex,
-        perPage: 10,
-        totalCount: filteredOrders.length,
-      },
-    })
-  },
-)
+  if (orderId) {
+    filteredOrders = filteredOrders.filter((order) =>
+      order.orderId.includes(orderId),
+    )
+  }
+
+  if (status) {
+    filteredOrders = filteredOrders.filter((order) => order.status === status)
+  }
+
+  const paginatedOrders = filteredOrders.slice(
+    pageIndex * 10,
+    (pageIndex + 1) * 10,
+  )
+
+  const data: GetOrdersRes = {
+    orders: paginatedOrders,
+    meta: {
+      pageIndex,
+      perPage: 10,
+      totalCount: filteredOrders.length,
+    },
+  }
+
+  return HttpResponse.json(data)
+})

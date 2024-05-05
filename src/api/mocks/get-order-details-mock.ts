@@ -5,12 +5,16 @@ import { GetOrderDetailsParams, GetOrderDetailsRes } from '../get-order-details'
 export const getOrderDetailsMock = http.get<
   GetOrderDetailsParams,
   never,
-  GetOrderDetailsRes
->('/orders/:orderId', ({ params }) => {
+  never
+>('/orders/:orderId', ({ params, cookies }) => {
+  if (!cookies.auth) {
+    return new HttpResponse(null, { status: 401 })
+  }
+
   const price1 = 2400 + Math.round(Math.random() * 1000) * 10
   const price2 = 2400 + Math.round(Math.random() * 1000) * 10
 
-  return HttpResponse.json({
+  const data: GetOrderDetailsRes = {
     id: params.orderId,
     customer: {
       name: 'John Doe',
@@ -34,5 +38,7 @@ export const getOrderDetailsMock = http.get<
         quantity: 1,
       },
     ],
-  })
+  }
+
+  return HttpResponse.json(data)
 })

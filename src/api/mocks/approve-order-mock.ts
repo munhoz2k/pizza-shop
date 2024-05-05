@@ -4,7 +4,11 @@ import { ApproveOrderParams } from '../approve-order'
 
 export const approveOrderMock = http.patch<ApproveOrderParams, never, never>(
   '/orders/:orderId/approve',
-  async ({ params }) => {
+  ({ params, cookies }) => {
+    if (!cookies.auth) {
+      return new HttpResponse(null, { status: 401 })
+    }
+
     if (params.orderId === 'error-order-id') {
       return new HttpResponse(null, { status: 400 })
     }
